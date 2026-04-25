@@ -12,6 +12,7 @@ from torch import Tensor
 from cs336_basics.modules.linear import Linear
 from cs336_basics.modules.embedding import Embedding
 from cs336_basics.modules.rmsnorm import RMSNorm
+from cs336_basics.modules.silu import SiLU
 
 def run_linear(
     d_in: int,
@@ -399,7 +400,8 @@ def run_silu(in_features: Float[Tensor, " ..."]) -> Float[Tensor, " ..."]:
         Float[Tensor,"..."]: of with the same shape as `in_features` with the output of applying
         SiLU to each element.
     """
-    raise NotImplementedError
+    silu = SiLU()
+    return silu(in_features)
 
 
 def run_get_batch(
