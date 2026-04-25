@@ -14,7 +14,8 @@ from cs336_basics.modules.embedding import Embedding
 from cs336_basics.modules.rmsnorm import RMSNorm
 from cs336_basics.modules.silu import SiLU
 from cs336_basics.modules.swiglu import SwiGlu
-
+from cs336_basics.modules.rope import RoPE
+from cs336_basics.modules.softmax import softmax
 def run_linear(
     d_in: int,
     d_out: int,
@@ -213,7 +214,8 @@ def run_rope(
     Returns:
         Float[Tensor, " ... sequence_length d_k"]: Tensor with RoPEd input.
     """
-    raise NotImplementedError
+    ro_pe = RoPE(theta, d_k, max_seq_len, device=in_query_or_key.device)
+    return ro_pe(in_query_or_key, token_positions)
 
 
 def run_transformer_block(
@@ -447,7 +449,7 @@ def run_softmax(in_features: Float[Tensor, " ..."], dim: int) -> Float[Tensor, "
         Float[Tensor, "..."]: Tensor of with the same shape as `in_features` with the output of
         softmax normalizing the specified `dim`.
     """
-    raise NotImplementedError
+    return softmax(in_features, dim)
 
 
 def run_cross_entropy(
